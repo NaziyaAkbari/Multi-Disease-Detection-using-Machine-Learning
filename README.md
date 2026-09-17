@@ -43,49 +43,4 @@ The system uses two detection approaches:
 | IDE | Visual Studio Code |
 
 
-## 📁 Project Structure
-
-multi-disease-detection/
-│
-├── disease_detection/ # Django project settings
-│ ├── settings.py
-│ ├── urls.py
-│ └── wsgi.py
-│
-├── accounts/ # User registration and login
-│ ├── models.py # UserProfile model
-│ ├── views.py
-│ └── urls.py
-│
-├── diseases/ # All 5 disease prediction modules
-│ ├── models.py # PredictionRecord, ContactMessage
-│ ├── views.py # All prediction logic
-│ ├── urls.py
-│ ├── image_predictor.py # CNN prediction + image validation
-│ ├── disease_data.py # Medicines, tips, hospitals data
-│ └── ml_models/ # Trained .h5 model files
-│ ├── skin_model.h5
-│ ├── skin_classes.json
-│ ├── chickenpox_model.h5
-│ └── chickenpox_classes.json
-│
-├── dashboard/ # Admin dashboard
-│ ├── views.py
-│ └── urls.py
-│
-├── templates/ # All HTML templates
-│ ├── base.html
-│ ├── landing.html
-│ ├── about.html
-│ ├── contact.html
-│ ├── accounts/
-│ ├── diseases/
-│ └── dashboard/
-│
-├── static/ # CSS and JS files
-├── media/ # Uploaded images
-├── requirements.txt
-└── manage.py
-
-
 ## Author: NAZIYA AKBARI
