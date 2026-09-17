@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+{% block title %}Malaria Screening{% endblock %}
+{% block content %}
+<div class="row justify-content-center mt-4">
+  <div class="col-md-7">
+    <div class="card p-4">
+      <div class="text-center mb-4">
+        <i class="fas fa-virus fa-3x" style="color:#8e44ad;"></i>
+        <h4 class="mt-2 fw-bold">Malaria Screening</h4>
+        <p class="text-muted small">
+          Answer based on symptoms in the
+          <strong>last 7-14 days</strong>
+        </p>
+      </div>
+
+      <div class="alert alert-info py-2 small">
+        <i class="fas fa-info-circle me-1"></i>
+        <strong>Note:</strong> Result is Positive only when
+        confidence is above 70%. Below 70% shows possible
+        alternative diseases with similar symptoms.
+      </div>
+
+      <form method="POST">
+        {% csrf_token %}
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">
+            Sudden High Fever (above 38.5°C)?
+            <span class="badge bg-warning text-dark ms-1">Key Symptom</span>
+          </label>
+          <select name="high_fever_sudden" class="form-select" required>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">
+            Cyclical Fever — comes and goes every 1-2 days?
+            <span class="badge bg-danger ms-1">High Indicator</span>
+          </label>
+          <select name="cyclical_fever" class="form-select" required>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">
+            Severe Chills and Rigors (uncontrollable shaking)?
+            <span class="badge bg-danger ms-1">High Indicator</span>
+          </label>
+          <select name="chills_rigors" class="form-select" required>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">
+            Profuse Sweating after the fever breaks?
+          </label>
+          <select name="profuse_sweating" class="form-select" required>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">
+            Severe Headache especially behind the eyes?
+          </label>
+          <select name="severe_headache" class="form-select" required>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">
+            Nausea and Vomiting?
+          </label>
+          <select name="nausea_vomiting" class="form-select" required>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">
+            Severe Muscle and Joint Pain?
+          </label>
+          <select name="muscle_joint_pain" class="form-select" required>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">
+            Pallor (pale skin, pale inner eyelids — signs of Anaemia)?
+            <span class="badge bg-warning text-dark ms-1">Key Symptom</span>
+          </label>
+          <select name="anaemia_pallor" class="form-select" required>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">
+            Pain or Swelling in the Left Side of Abdomen (Spleen area)?
+            <span class="badge bg-danger ms-1">High Indicator</span>
+          </label>
+          <select name="enlarged_spleen" class="form-select" required>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">
+            Recent Travel to a Malaria-Endemic Area (forest, tribal,
+            northeast India or abroad)?
+            <span class="badge bg-danger ms-1">High Indicator</span>
+          </label>
+          <select name="recent_travel_endemic" class="form-select" required>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">
+            <i class="fas fa-map-marker-alt me-1"
+               style="color:#8e44ad;"></i>Your State (India)
+          </label>
+          <select name="location" class="form-select">
+            <option value="">-- Select Your State --</option>
+            <option>Andhra Pradesh</option><option>Assam</option>
+            <option>Bihar</option><option>Chhattisgarh</option>
+            <option>Delhi</option><option>Goa</option>
+            <option>Gujarat</option><option>Haryana</option>
+            <option>Himachal Pradesh</option><option>Jharkhand</option>
+            <option>Karnataka</option><option>Kerala</option>
+            <option>Madhya Pradesh</option><option>Maharashtra</option>
+            <option>Odisha</option><option>Punjab</option>
+            <option>Rajasthan</option><option>Tamil Nadu</option>
+            <option>Telangana</option><option>Uttar Pradesh</option>
+            <option>Uttarakhand</option><option>West Bengal</option>
+            <option>Jammu & Kashmir</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">
+          <i class="fas fa-search me-2"></i>Predict Now
+        </button>
+        <a href="{% url 'disease_home' %}"
+           class="btn btn-outline-secondary w-100 mt-2">
+          <i class="fas fa-arrow-left me-1"></i>Back
+        </a>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

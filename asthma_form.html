@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+{% block title %}Asthma Screening{% endblock %}
+{% block content %}
+<div class="row justify-content-center mt-4">
+  <div class="col-md-7">
+    <div class="card p-4">
+      <div class="text-center mb-4">
+        <i class="fas fa-wind fa-3x" style="color:#2980b9;"></i>
+        <h4 class="mt-2 fw-bold">Asthma Screening</h4>
+        <p class="text-muted small">
+          Answer based on symptoms you experience
+          <strong>regularly or repeatedly</strong>
+        </p>
+      </div>
+
+      <div class="alert alert-info py-2 small">
+        <i class="fas fa-info-circle me-1"></i>
+        <strong>Note:</strong> Result is Positive only when
+        confidence is above 70%. Below 70% shows possible
+        alternative diseases with similar symptoms.
+      </div>
+
+      <form method="POST">
+        {% csrf_token %}
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">
+            Audible Wheezing Sound when Breathing?
+            <span class="badge bg-danger ms-1">High Indicator</span>
+          </label>
+          <select name="wheezing_sound" class="form-select" required>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">
+            Shortness of Breath during mild exercise or climbing stairs?
+            <span class="badge bg-danger ms-1">High Indicator</span>
+          </label>
+          <select name="shortness_breath_exertion" class="form-select"
+                  required>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">
+            Chest Tightness or Pressure feeling in the chest?
+            <span class="badge bg-danger ms-1">High Indicator</span>
+          </label>
+          <select name="chest_tightness" class="form-select" required>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">
+            Cough that worsens at Night or Early Morning?
+          </label>
+          <select name="night_cough" class="form-select" required>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">
+            Cough triggered by Cold Air or Cold Weather?
+          </label>
+          <select name="cold_triggered_cough" class="form-select" required>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">
+            Breathing difficulty that worsens with Exercise or Running?
+          </label>
+          <select name="exercise_worsens" class="form-select" required>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">
+            Personal History of Allergies (hay fever, eczema, food allergy)?
+          </label>
+          <select name="allergy_history" class="form-select" required>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">
+            Family History of Asthma or Allergic Conditions?
+          </label>
+          <select name="family_asthma_history" class="form-select" required>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">
+            Symptoms triggered by Dust, Smoke, Pollen, or Strong Smells?
+          </label>
+          <select name="dust_smoke_trigger" class="form-select" required>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">
+            Do Bronchodilator Inhalers (like Salbutamol) Relieve Symptoms?
+            <span class="badge bg-danger ms-1">High Indicator</span>
+          </label>
+          <select name="inhaler_relief" class="form-select" required>
+            <option value="0">No / Not tried</option>
+            <option value="1">Yes — inhaler gives relief</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">
+            <i class="fas fa-map-marker-alt me-1"
+               style="color:#2980b9;"></i>Your State (India)
+          </label>
+          <select name="location" class="form-select">
+            <option value="">-- Select Your State --</option>
+            <option>Andhra Pradesh</option><option>Assam</option>
+            <option>Bihar</option><option>Chhattisgarh</option>
+            <option>Delhi</option><option>Goa</option>
+            <option>Gujarat</option><option>Haryana</option>
+            <option>Himachal Pradesh</option><option>Jharkhand</option>
+            <option>Karnataka</option><option>Kerala</option>
+            <option>Madhya Pradesh</option><option>Maharashtra</option>
+            <option>Odisha</option><option>Punjab</option>
+            <option>Rajasthan</option><option>Tamil Nadu</option>
+            <option>Telangana</option><option>Uttar Pradesh</option>
+            <option>Uttarakhand</option><option>West Bengal</option>
+            <option>Jammu & Kashmir</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">
+          <i class="fas fa-search me-2"></i>Predict Now
+        </button>
+        <a href="{% url 'disease_home' %}"
+           class="btn btn-outline-secondary w-100 mt-2">
+          <i class="fas fa-arrow-left me-1"></i>Back
+        </a>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

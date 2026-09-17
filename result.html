@@ -1,0 +1,254 @@
+{% extends 'base.html' %}
+{% block title %}Prediction Result{% endblock %}
+{% block content %}
+<div class="row justify-content-center mt-4 px-2">
+  <div class="col-md-9">
+
+    <!-- Result Card -->
+    <div class="card p-4 mb-4">
+      <div class="text-center mb-3">
+
+        {% if prediction == 'Positive' %}
+        <div style="background:#fff5f5;border-radius:12px;padding:20px;">
+          <i class="fas fa-exclamation-circle fa-4x"
+             style="color:#e74c3c;"></i>
+          <h4 class="fw-bold text-danger mt-2">
+            Likely Positive for {{ disease }}
+          </h4>
+          <p class="text-muted">
+            Strong indicators detected. Please consult a doctor immediately.
+          </p>
+        </div>
+
+        {% elif prediction == 'Uncertain' %}
+        <div style="background:#fff8e1;border-radius:12px;padding:20px;">
+          <i class="fas fa-exclamation-triangle fa-4x"
+             style="color:#f39c12;"></i>
+          <h4 class="fw-bold mt-2" style="color:#e67e22;">
+            Uncertain — Possible {{ disease }} Risk
+          </h4>
+          <p class="text-muted">
+            Some indicators are present but confidence is below 70%.
+            This could also be another disease with similar symptoms.
+            See below for possible alternatives.
+          </p>
+        </div>
+
+        {% else %}
+        <div style="background:#f0fff4;border-radius:12px;padding:20px;">
+          <i class="fas fa-check-circle fa-4x"
+             style="color:#27ae60;"></i>
+          <h4 class="fw-bold text-success mt-2">
+            Likely Negative for {{ disease }}
+          </h4>
+          <p class="text-muted">
+            No strong indicators found. Stay healthy and monitor symptoms.
+          </p>
+        </div>
+        {% endif %}
+
+      </div>
+
+      <!-- Confidence Bar -->
+      <div class="mb-3">
+        <div class="d-flex justify-content-between mb-1">
+          <span class="fw-semibold">Confidence Score</span>
+          <span class="fw-bold">{{ confidence }}%</span>
+        </div>
+        <div class="progress" style="height:14px;border-radius:8px;">
+          <div class="progress-bar
+            {% if prediction == 'Positive' %}bg-danger
+            {% elif prediction == 'Uncertain' %}bg-warning
+            {% else %}bg-success{% endif %}"
+            style="width:{{ confidence }}%;border-radius:8px;">
+          </div>
+        </div>
+        <div class="d-flex justify-content-between mt-1">
+          <small class="text-muted">0%</small>
+          <small class="text-muted">
+            ← Negative | 40% — Uncertain — 70% | Positive →
+          </small>
+          <small class="text-muted">100%</small>
+        </div>
+      </div>
+
+      <div class="row text-center mt-2">
+        <div class="col-4">
+          <div class="p-2 rounded" style="background:#f8f9fa;">
+            <p class="mb-0 text-muted small">Disease</p>
+            <p class="mb-0 fw-bold">{{ disease }}</p>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="p-2 rounded" style="background:#f8f9fa;">
+            <p class="mb-0 text-muted small">Result</p>
+            <p class="mb-0 fw-bold
+              {% if prediction == 'Positive' %}text-danger
+              {% elif prediction == 'Uncertain' %}text-warning
+              {% else %}text-success{% endif %}">
+              {{ prediction }}
+            </p>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="p-2 rounded" style="background:#f8f9fa;">
+            <p class="mb-0 text-muted small">Location</p>
+            <p class="mb-0 fw-bold">
+              {{ location|default:"Not provided" }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="alert alert-warning mt-3 mb-0">
+        <i class="fas fa-exclamation-triangle me-1"></i>
+        <strong>Disclaimer:</strong> This is a screening tool only.
+        Always consult a qualified doctor for proper diagnosis.
+      </div>
+    </div>
+
+    <!-- Similar Diseases (Uncertain only) -->
+    {% if similar_diseases %}
+    <div class="card p-4 mb-4"
+         style="border-left:4px solid #f39c12;">
+      <h5 class="fw-bold mb-3">
+        <i class="fas fa-search me-2" style="color:#f39c12;"></i>
+        Possible Alternative Conditions with Similar Symptoms
+      </h5>
+      <p class="text-muted small mb-3">
+        Your symptoms match {{ disease }} partially but the confidence
+        is below 70%. The following conditions share similar symptoms
+        and should also be considered during your doctor visit.
+      </p>
+      {% for disease_alt in similar_diseases %}
+      <div class="card mb-3 p-3"
+           style="border-left:4px solid #e67e22;background:#fffdf7;">
+        <h6 class="fw-bold mb-1" style="color:#e67e22;">
+          <i class="fas fa-notes-medical me-2"></i>
+          {{ disease_alt.name }}
+        </h6>
+        <p class="small text-muted mb-1">
+          <strong>Why it matches:</strong> {{ disease_alt.reason }}
+        </p>
+        <p class="small mb-0" style="color:#27ae60;">
+          <strong>How it differs:</strong> {{ disease_alt.difference }}
+        </p>
+      </div>
+      {% endfor %}
+      <div class="alert alert-info mb-0 small">
+        <i class="fas fa-user-md me-1"></i>
+        Please visit a doctor and mention all your symptoms including
+        the alternative conditions listed above for a proper differential
+        diagnosis.
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- Medicines (Positive only) -->
+    {% if medicines %}
+    <div class="card p-4 mb-4">
+      <h5 class="fw-bold mb-3">
+        <i class="fas fa-pills me-2" style="color:#8e44ad;"></i>
+        Suggested Medicines
+      </h5>
+      <div class="alert alert-warning py-2">
+        <i class="fas fa-exclamation-triangle me-1"></i>
+        Always consult a licensed doctor before taking any medication.
+      </div>
+      <div class="row mt-3">
+        {% for med in medicines %}
+        <div class="col-md-6 mb-3">
+          <div class="d-flex align-items-start p-3 rounded"
+               style="background:#f8f0ff;border-left:4px solid #8e44ad;">
+            <i class="fas fa-capsules me-3 mt-1"
+               style="color:#8e44ad;"></i>
+            <div>
+              <p class="fw-bold mb-0">{{ med.name }}</p>
+              <p class="text-muted small mb-0">{{ med.use }}</p>
+              <span class="badge"
+                    style="background:#8e44ad;font-size:0.7rem;">
+                {{ med.type }}
+              </span>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- Tips -->
+    {% if tips %}
+    <div class="card p-4 mb-4">
+      <h5 class="fw-bold mb-3">
+        <i class="fas fa-lightbulb me-2" style="color:#f39c12;"></i>
+        {% if prediction == 'Negative' %}
+          Preventive Tips
+        {% else %}
+          Care and Health Tips
+        {% endif %}
+      </h5>
+      <div class="row">
+        {% for tip in tips %}
+        <div class="col-md-6 mb-2">
+          <div class="d-flex align-items-start p-2 rounded"
+               style="background:#fff8e1;">
+            <i class="fas fa-check-circle me-2 mt-1"
+               style="color:#f39c12;"></i>
+            <p class="mb-0 small">{{ tip }}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- Hospitals -->
+    {% if hospitals %}
+    <div class="card p-4 mb-4">
+      <h5 class="fw-bold mb-3">
+        <i class="fas fa-hospital me-2" style="color:#e74c3c;"></i>
+        Nearby Hospitals in {{ location }}
+      </h5>
+      <div class="row">
+        {% for hospital in hospitals %}
+        <div class="col-md-6 mb-3">
+          <div class="card h-100 p-3"
+               style="border-left:4px solid #e74c3c;">
+            <div class="d-flex align-items-start">
+              <i class="fas fa-hospital-alt fa-2x me-3 mt-1"
+                 style="color:#e74c3c;"></i>
+              <div>
+                <h6 class="fw-bold mb-1">{{ hospital.name }}</h6>
+                <p class="text-muted small mb-1">
+                  <i class="fas fa-map-marker-alt me-1"></i>
+                  {{ hospital.address }}
+                </p>
+                <p class="text-muted small mb-1">
+                  <i class="fas fa-phone me-1"></i>{{ hospital.phone }}
+                </p>
+                <span class="badge bg-danger">
+                  {{ hospital.specialty }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+    <div class="d-flex gap-2 justify-content-center mt-2 mb-4">
+      <a href="{% url 'disease_home' %}" class="btn btn-primary">
+        <i class="fas fa-home me-1"></i>Back to Home
+      </a>
+      <a href="{% url 'prediction_history' %}"
+         class="btn btn-outline-secondary">
+        <i class="fas fa-history me-1"></i>View History
+      </a>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

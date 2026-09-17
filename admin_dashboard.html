@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block content %}
+<div class="row mt-4 px-3">
+  <div class="col-12 mb-3">
+    <h4 class="fw-bold">
+      <i class="fas fa-tachometer-alt me-2"></i>Admin Dashboard
+    </h4>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="col-md-3 mb-4">
+    <div class="card p-3 text-center shadow-sm">
+      <i class="fas fa-users fa-2x mb-2" style="color:#1a1a2e;"></i>
+      <h3 class="fw-bold mb-0">{{ total_users }}</h3>
+      <p class="text-muted small mb-0">Total Users</p>
+    </div>
+  </div>
+  <div class="col-md-3 mb-4">
+    <div class="card p-3 text-center shadow-sm">
+      <i class="fas fa-clipboard-list fa-2x mb-2"
+         style="color:#2980b9;"></i>
+      <h3 class="fw-bold mb-0">{{ total_predictions }}</h3>
+      <p class="text-muted small mb-0">Total Predictions</p>
+    </div>
+  </div>
+  <div class="col-md-3 mb-4">
+    <div class="card p-3 text-center shadow-sm">
+      <i class="fas fa-exclamation-circle fa-2x mb-2"
+         style="color:#e74c3c;"></i>
+      <h3 class="fw-bold mb-0 text-danger">{{ positive_count }}</h3>
+      <p class="text-muted small mb-0">Positive Cases</p>
+    </div>
+  </div>
+  <div class="col-md-3 mb-4">
+    <div class="card p-3 text-center shadow-sm">
+      <i class="fas fa-check-circle fa-2x mb-2"
+         style="color:#27ae60;"></i>
+      <h3 class="fw-bold mb-0 text-success">{{ negative_count }}</h3>
+      <p class="text-muted small mb-0">Negative Cases</p>
+    </div>
+  </div>
+
+  <!-- Chart -->
+  <div class="col-md-7 mb-4">
+    <div class="card p-4 shadow-sm">
+      <h6 class="fw-bold mb-3">Predictions per Disease</h6>
+      {% if chart %}
+        <img src="data:image/png;base64,{{ chart }}"
+             class="img-fluid rounded"
+             alt="Predictions Chart">
+      {% else %}
+        <p class="text-muted">No prediction data available yet.</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Recent Predictions -->
+  <div class="col-md-5 mb-4">
+    <div class="card p-3 shadow-sm">
+      <h6 class="fw-bold mb-3">Recent Predictions</h6>
+      <div class="table-responsive">
+        <table class="table table-sm table-hover mb-0">
+          <thead style="background:#1a1a2e; color:white;">
+            <tr>
+              <th>User</th>
+              <th>Disease</th>
+              <th>Result</th>
+              <th>Conf%</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for r in records %}
+            <tr>
+              <td class="small">{{ r.user.username }}</td>
+              <td class="small">{{ r.get_disease_type_display }}</td>
+              <td>
+                {% if r.prediction == 'Positive' %}
+                  <span class="badge bg-danger">Positive</span>
+                {% elif r.prediction == 'Negative' %}
+                  <span class="badge bg-success">Negative</span>
+                {% elif r.prediction == 'Uncertain' %}
+                  <span class="badge bg-warning text-dark">
+                    Uncertain
+                  </span>
+                {% else %}
+                  <!-- Image-based disease label e.g. Acne -->
+                  <span class="badge"
+                        style="background:#e67e22;">
+                    {{ r.prediction }}
+                  </span>
+                {% endif %}
+              </td>
+              <td class="small">{{ r.confidence }}%</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

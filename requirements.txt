@@ -1,0 +1,8 @@
+django>=4.2
+scikit-learn
+pandas
+numpy
+matplotlib
+pillow
+django-crispy-forms
+crispy-bootstrap5

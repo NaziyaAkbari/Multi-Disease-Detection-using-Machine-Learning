@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+{% block title %}Tuberculosis Screening{% endblock %}
+{% block content %}
+<div class="row justify-content-center mt-4">
+  <div class="col-md-7">
+    <div class="card p-4">
+      <div class="text-center mb-4">
+        <i class="fas fa-lungs fa-3x" style="color:#e74c3c;"></i>
+        <h4 class="mt-2 fw-bold">Tuberculosis Screening</h4>
+        <p class="text-muted small">
+          Answer all questions honestly based on symptoms
+          present for <strong>more than 2 weeks</strong>
+        </p>
+      </div>
+
+      <div class="alert alert-info py-2 small">
+        <i class="fas fa-info-circle me-1"></i>
+        <strong>Note:</strong> Result is Positive only when
+        confidence is above 70%. Below 70% shows possible
+        alternative diseases with similar symptoms.
+      </div>
+
+      <form method="POST">
+        {% csrf_token %}
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">
+            Persistent Cough lasting more than 2 weeks?
+            <span class="badge bg-warning text-dark ms-1">Key Symptom</span>
+          </label>
+          <select name="persistent_cough" class="form-select" required>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">
+            Coughing up Blood or Blood-stained Sputum?
+            <span class="badge bg-danger ms-1">High Indicator</span>
+          </label>
+          <select name="coughing_blood" class="form-select" required>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">
+            Chest Pain when Breathing or Coughing?
+          </label>
+          <select name="chest_pain" class="form-select" required>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">
+            Low-Grade Fever especially in the Evenings?
+            <span class="badge bg-warning text-dark ms-1">Key Symptom</span>
+          </label>
+          <select name="fever_evening" class="form-select" required>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">
+            Drenching Night Sweats (soaking clothes/sheets)?
+            <span class="badge bg-danger ms-1">High Indicator</span>
+          </label>
+          <select name="night_sweats" class="form-select" required>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">
+            Unexplained Weight Loss of more than 3 kg in a month?
+            <span class="badge bg-danger ms-1">High Indicator</span>
+          </label>
+          <select name="unexplained_weight_loss" class="form-select" required>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">
+            Extreme Fatigue and Weakness throughout the day?
+          </label>
+          <select name="extreme_fatigue" class="form-select" required>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">
+            Loss of Appetite — reduced desire to eat?
+          </label>
+          <select name="loss_of_appetite" class="form-select" required>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">
+            Shortness of Breath even on mild activity?
+          </label>
+          <select name="shortness_breath" class="form-select" required>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">
+            Swollen Lymph Nodes (lumps in neck or armpits)?
+            <span class="badge bg-danger ms-1">High Indicator</span>
+          </label>
+          <select name="swollen_lymph_nodes" class="form-select" required>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">
+            <i class="fas fa-map-marker-alt me-1"
+               style="color:#e74c3c;"></i>Your State (India)
+          </label>
+          <select name="location" class="form-select">
+            <option value="">-- Select Your State --</option>
+            <option>Andhra Pradesh</option><option>Assam</option>
+            <option>Bihar</option><option>Chhattisgarh</option>
+            <option>Delhi</option><option>Goa</option>
+            <option>Gujarat</option><option>Haryana</option>
+            <option>Himachal Pradesh</option><option>Jharkhand</option>
+            <option>Karnataka</option><option>Kerala</option>
+            <option>Madhya Pradesh</option><option>Maharashtra</option>
+            <option>Odisha</option><option>Punjab</option>
+            <option>Rajasthan</option><option>Tamil Nadu</option>
+            <option>Telangana</option><option>Uttar Pradesh</option>
+            <option>Uttarakhand</option><option>West Bengal</option>
+            <option>Jammu & Kashmir</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">
+          <i class="fas fa-search me-2"></i>Predict Now
+        </button>
+        <a href="{% url 'disease_home' %}"
+           class="btn btn-outline-secondary w-100 mt-2">
+          <i class="fas fa-arrow-left me-1"></i>Back
+        </a>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

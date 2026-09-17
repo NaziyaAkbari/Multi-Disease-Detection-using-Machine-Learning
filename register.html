@@ -1,0 +1,250 @@
+{% extends 'base.html' %}
+{% block title %}Register{% endblock %}
+{% block content %}
+
+<div class="row justify-content-center mt-4 mb-5">
+  <div class="col-md-8">
+    <div class="card p-4">
+
+      <!-- Header -->
+      <div class="text-center mb-4">
+        <i class="fas fa-user-plus fa-3x" style="color:#1a1a2e;"></i>
+        <h3 class="mt-2 fw-bold">Create Account</h3>
+        <p class="text-muted">Join Multi Disease Detection — Fill in your details below</p>
+      </div>
+
+      <!-- Error Messages -->
+      {% if messages %}
+        {% for message in messages %}
+          {% if message.tags == 'error' %}
+          <div class="alert alert-danger alert-dismissible fade show">
+            <i class="fas fa-exclamation-circle me-2"></i>{{ message }}
+            <button type="button" class="btn-close"
+                    data-bs-dismiss="alert"></button>
+          </div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <!-- ── Section 1: Account Info ───────────────────────── -->
+        <div class="p-3 rounded mb-4"
+             style="background:#f8f9fa;border-left:4px solid #1a1a2e;">
+          <h6 class="fw-bold mb-3">
+            <i class="fas fa-lock me-2" style="color:#1a1a2e;"></i>
+            Account Information
+          </h6>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label fw-semibold">
+                Username <span class="text-danger">*</span>
+              </label>
+              <input type="text" name="username" class="form-control"
+                     placeholder="Choose a username"
+                     value="{{ post.username|default:'' }}" required>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label fw-semibold">
+                Email Address <span class="text-danger">*</span>
+              </label>
+              <input type="email" name="email" class="form-control"
+                     placeholder="Enter your email"
+                     value="{{ post.email|default:'' }}" required>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label fw-semibold">
+                Password <span class="text-danger">*</span>
+              </label>
+              <div class="input-group">
+                <input type="password" name="password1"
+                       id="password1" class="form-control"
+                       placeholder="Min 8 characters" required>
+                <button class="btn btn-outline-secondary" type="button"
+                        onclick="togglePass('password1')">
+                  <i class="fas fa-eye"></i>
+                </button>
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label fw-semibold">
+                Confirm Password <span class="text-danger">*</span>
+              </label>
+              <div class="input-group">
+                <input type="password" name="password2"
+                       id="password2" class="form-control"
+                       placeholder="Repeat password" required>
+                <button class="btn btn-outline-secondary" type="button"
+                        onclick="togglePass('password2')">
+                  <i class="fas fa-eye"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Section 2: Personal Info ─────────────────────── -->
+        <div class="p-3 rounded mb-4"
+             style="background:#f8f9fa;border-left:4px solid #2980b9;">
+          <h6 class="fw-bold mb-3">
+            <i class="fas fa-user me-2" style="color:#2980b9;"></i>
+            Personal Information
+          </h6>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label fw-semibold">First Name</label>
+              <input type="text" name="first_name" class="form-control"
+                     placeholder="Enter first name"
+                     value="{{ post.first_name|default:'' }}">
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label fw-semibold">Last Name</label>
+              <input type="text" name="last_name" class="form-control"
+                     placeholder="Enter last name"
+                     value="{{ post.last_name|default:'' }}">
+            </div>
+            <div class="col-md-4 mb-3">
+              <label class="form-label fw-semibold">Age</label>
+              <input type="number" name="age" class="form-control"
+                     placeholder="Your age" min="1" max="120"
+                     value="{{ post.age|default:'' }}">
+            </div>
+            <div class="col-md-4 mb-3">
+              <label class="form-label fw-semibold">Gender</label>
+              <select name="gender" class="form-select">
+                <option value="">-- Select --</option>
+                <option value="Male"
+                  {% if post.gender == 'Male' %}selected{% endif %}>
+                  Male
+                </option>
+                <option value="Female"
+                  {% if post.gender == 'Female' %}selected{% endif %}>
+                  Female
+                </option>
+                <option value="Other"
+                  {% if post.gender == 'Other' %}selected{% endif %}>
+                  Other
+                </option>
+              </select>
+            </div>
+            <div class="col-md-4 mb-3">
+              <label class="form-label fw-semibold">Phone Number</label>
+              <input type="tel" name="phone" class="form-control"
+                     placeholder="+91 XXXXX XXXXX"
+                     value="{{ post.phone|default:'' }}">
+            </div>
+            <div class="col-md-12 mb-3">
+              <label class="form-label fw-semibold">State (India)</label>
+              <select name="state" class="form-select">
+                <option value="">-- Select Your State --</option>
+                <option>Andhra Pradesh</option>
+                <option>Arunachal Pradesh</option>
+                <option>Assam</option>
+                <option>Bihar</option>
+                <option>Chhattisgarh</option>
+                <option>Delhi</option>
+                <option>Goa</option>
+                <option>Gujarat</option>
+                <option>Haryana</option>
+                <option>Himachal Pradesh</option>
+                <option>Jharkhand</option>
+                <option>Karnataka</option>
+                <option>Kerala</option>
+                <option>Madhya Pradesh</option>
+                <option>Maharashtra</option>
+                <option>Manipur</option>
+                <option>Meghalaya</option>
+                <option>Mizoram</option>
+                <option>Nagaland</option>
+                <option>Odisha</option>
+                <option>Punjab</option>
+                <option>Rajasthan</option>
+                <option>Sikkim</option>
+                <option>Tamil Nadu</option>
+                <option>Telangana</option>
+                <option>Tripura</option>
+                <option>Uttar Pradesh</option>
+                <option>Uttarakhand</option>
+                <option>West Bengal</option>
+                <option>Jammu & Kashmir</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Section 3: Profile Picture ───────────────────── -->
+        <div class="p-3 rounded mb-4"
+             style="background:#f8f9fa;border-left:4px solid #27ae60;">
+          <h6 class="fw-bold mb-3">
+            <i class="fas fa-camera me-2" style="color:#27ae60;"></i>
+            Profile Picture
+            <span class="text-muted fw-normal small">(Optional)</span>
+          </h6>
+          <div class="row align-items-center">
+            <div class="col-md-3 text-center mb-3 mb-md-0">
+              <img id="profile-preview"
+                   src="https://ui-avatars.com/api/?name=User&background=1a1a2e&color=fff&size=100"
+                   class="rounded-circle"
+                   style="width:90px;height:90px;object-fit:cover;
+                          border:3px solid #1a1a2e;">
+            </div>
+            <div class="col-md-9">
+              <input type="file" name="profile_pic" id="profile-pic-input"
+                     class="form-control" accept="image/*">
+              <div class="form-text">
+                JPG or PNG. Max 2MB. Square image recommended.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="btn btn-primary w-100 py-2 mt-2">
+          <i class="fas fa-user-plus me-2"></i>Create My Account
+        </button>
+      </form>
+
+      <hr>
+      <p class="text-center mb-0">
+        Already have an account?
+        <a href="{% url 'login' %}" class="fw-semibold">Login here</a>
+      </p>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  // Profile picture preview
+  document.getElementById('profile-pic-input')
+    .addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = ev => {
+        document.getElementById('profile-preview').src = ev.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+
+  // Toggle password visibility
+  function togglePass(id) {
+    const input = document.getElementById(id);
+    input.type = input.type === 'password' ? 'text' : 'password';
+  }
+
+  // Password match check
+  document.querySelector('form').addEventListener('submit', function(e) {
+    const p1 = document.getElementById('password1').value;
+    const p2 = document.getElementById('password2').value;
+    if (p1 !== p2) {
+      e.preventDefault();
+      alert('Passwords do not match. Please check and try again.');
+    }
+  });
+</script>
+{% endblock %}

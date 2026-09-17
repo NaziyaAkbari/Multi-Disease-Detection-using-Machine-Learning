@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% block title %}Home — Select Disease{% endblock %}
+{% block content %}
+<div class="row mt-4 px-3">
+  <div class="col-12 text-center mb-4">
+    <h2 class="fw-bold">Select a Disease to Detect</h2>
+    <p class="text-muted">Choose a disease module below to begin your screening</p>
+  </div>
+
+  <!-- Tuberculosis -->
+  <div class="col-md-4 mb-4">
+    <div class="card h-100 text-center p-4">
+      <i class="fas fa-lungs fa-3x mb-3" style="color:#e74c3c;"></i>
+      <h5 class="fw-bold">Tuberculosis</h5>
+      <p class="text-muted small">Symptom-based screening for TB using predictive ML model.</p>
+      <a href="{% url 'tb_predict' %}" class="btn btn-primary mt-auto">
+        <i class="fas fa-stethoscope me-1"></i>Start Screening
+      </a>
+    </div>
+  </div>
+
+  <!-- Skin Disease -->
+  <div class="col-md-4 mb-4">
+    <div class="card h-100 text-center p-4">
+      <i class="fas fa-hand-dots fa-3x mb-3" style="color:#e67e22;"></i>
+      <h5 class="fw-bold">Skin Disease</h5>
+      <p class="text-muted small">Upload a skin image for AI-based disease detection.</p>
+      <a href="{% url 'skin_predict' %}" class="btn btn-primary mt-auto">
+        <i class="fas fa-camera me-1"></i>Upload Image
+      </a>
+    </div>
+  </div>
+
+  <!-- Malaria -->
+  <div class="col-md-4 mb-4">
+    <div class="card h-100 text-center p-4">
+      <i class="fas fa-virus fa-3x mb-3" style="color:#8e44ad;"></i>
+      <h5 class="fw-bold">Malaria</h5>
+      <p class="text-muted small">Detect malaria based on symptoms and patient indicators.</p>
+      <a href="{% url 'malaria_predict' %}" class="btn btn-primary mt-auto">
+        <i class="fas fa-stethoscope me-1"></i>Start Screening
+      </a>
+    </div>
+  </div>
+
+  <!-- Asthma -->
+  <div class="col-md-4 mb-4">
+    <div class="card h-100 text-center p-4">
+      <i class="fas fa-wind fa-3x mb-3" style="color:#2980b9;"></i>
+      <h5 class="fw-bold">Asthma</h5>
+      <p class="text-muted small">Assess asthma risk based on respiratory symptoms.</p>
+      <a href="{% url 'asthma_predict' %}" class="btn btn-primary mt-auto">
+        <i class="fas fa-stethoscope me-1"></i>Start Screening
+      </a>
+    </div>
+  </div>
+
+  <!-- Chickenpox -->
+  <div class="col-md-4 mb-4">
+    <div class="card h-100 text-center p-4">
+      <i class="fas fa-disease fa-3x mb-3" style="color:#27ae60;"></i>
+      <h5 class="fw-bold">Chickenpox</h5>
+      <p class="text-muted small">Identify chickenpox through symptom analysis.</p>
+      <a href="{% url 'chickenpox_predict' %}" class="btn btn-primary mt-auto">
+        <i class="fas fa-stethoscope me-1"></i>Start Screening
+      </a>
+    </div>
+  </div>
+
+  <!-- History -->
+  <div class="col-md-4 mb-4">
+    <div class="card h-100 text-center p-4">
+      <i class="fas fa-history fa-3x mb-3" style="color:#7f8c8d;"></i>
+      <h5 class="fw-bold">My History</h5>
+      <p class="text-muted small">View all your past predictions and results.</p>
+      <a href="{% url 'prediction_history' %}" class="btn btn-secondary mt-auto">
+        <i class="fas fa-list me-1"></i>View History
+      </a>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

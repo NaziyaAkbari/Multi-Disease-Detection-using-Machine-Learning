@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% block title %}Skin Disease Screening{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-4">
+  <div class="col-md-7">
+    <div class="card p-4">
+      <div class="text-center mb-4">
+        <i class="fas fa-hand-dots fa-3x" style="color:#e67e22;"></i>
+        <h4 class="mt-2 fw-bold">Skin Disease Detection</h4>
+        <p class="text-muted small">
+          Upload a clear image — our AI can detect
+          Acne, Eczema, Melanoma, Psoriasis, Ringworm and more
+        </p>
+      </div>
+
+      <!-- Disease chips -->
+      <div class="d-flex flex-wrap gap-2 justify-content-center mb-4">
+        {% for label in disease_labels %}
+        <span class="badge rounded-pill px-3 py-2"
+              style="background:#fff3e0; color:#e67e22;
+                     border:1px solid #e67e22; font-size:0.85rem;">
+          {{ label }}
+        </span>
+        {% endfor %}
+      </div>
+
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <!-- Image Upload -->
+        <div class="mb-3">
+          <label class="form-label fw-semibold">
+            <i class="fas fa-camera me-1"></i>Upload Skin Image
+          </label>
+          <input type="file" name="skin_image" id="skin-img-input"
+                 class="form-control" accept="image/*" required>
+          <div class="form-text">
+            Clear close-up photo of the affected skin area. JPG or PNG only.
+          </div>
+        </div>
+
+        <!-- Preview -->
+        <div id="skin-preview-wrap" class="text-center mb-3 d-none">
+          <img id="skin-preview-img" src="#"
+               class="img-thumbnail rounded"
+               style="max-height:240px; border:2px solid #e67e22;">
+          <p class="text-muted small mt-1">Preview</p>
+        </div>
+
+        <!-- Upload Tips -->
+        <div class="p-3 rounded mb-3"
+             style="background:#fff8e1; border-left:4px solid #f39c12;">
+          <p class="fw-semibold mb-1 small">
+            <i class="fas fa-info-circle me-1" style="color:#f39c12;"></i>
+            For best results:
+          </p>
+          <ul class="mb-0 small text-muted ps-3">
+            <li>Take the photo in good lighting</li>
+            <li>Make sure the affected area fills most of the image</li>
+            <li>Avoid blurry or dark images</li>
+            <li>Do not upload screenshots or random photos</li>
+          </ul>
+        </div>
+
+        <!-- Location -->
+        <div class="mb-3">
+          <label class="form-label fw-semibold">
+            <i class="fas fa-map-marker-alt me-1" style="color:#e74c3c;"></i>
+            Your State (India)
+          </label>
+          <select name="location" class="form-select">
+            <option value="">-- Select Your State --</option>
+            <option>Andhra Pradesh</option>
+            <option>Arunachal Pradesh</option>
+            <option>Assam</option>
+            <option>Bihar</option>
+            <option>Chhattisgarh</option>
+            <option>Delhi</option>
+            <option>Goa</option>
+            <option>Gujarat</option>
+            <option>Haryana</option>
+            <option>Himachal Pradesh</option>
+            <option>Jharkhand</option>
+            <option>Karnataka</option>
+            <option>Kerala</option>
+            <option>Madhya Pradesh</option>
+            <option>Maharashtra</option>
+            <option>Manipur</option>
+            <option>Meghalaya</option>
+            <option>Mizoram</option>
+            <option>Nagaland</option>
+            <option>Odisha</option>
+            <option>Punjab</option>
+            <option>Rajasthan</option>
+            <option>Sikkim</option>
+            <option>Tamil Nadu</option>
+            <option>Telangana</option>
+            <option>Tripura</option>
+            <option>Uttar Pradesh</option>
+            <option>Uttarakhand</option>
+            <option>West Bengal</option>
+            <option>Jammu & Kashmir</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">
+          <i class="fas fa-brain me-2"></i>Analyze with AI
+        </button>
+        <a href="{% url 'disease_home' %}" class="btn btn-outline-secondary w-100 mt-2">
+          <i class="fas fa-arrow-left me-1"></i>Back
+        </a>
+      </form>
+
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  document.getElementById('skin-img-input')
+    .addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = ev => {
+        document.getElementById('skin-preview-img').src = ev.target.result;
+        document.getElementById('skin-preview-wrap').classList.remove('d-none');
+      };
+      reader.readAsDataURL(file);
+    });
+</script>
+{% endblock %}

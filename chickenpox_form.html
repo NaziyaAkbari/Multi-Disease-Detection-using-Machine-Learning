@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+{% block title %}Chickenpox Screening{% endblock %}
+{% block content %}
+<div class="row justify-content-center mt-4">
+  <div class="col-md-7">
+    <div class="card p-4">
+      <div class="text-center mb-4">
+        <i class="fas fa-disease fa-3x" style="color:#27ae60;"></i>
+        <h4 class="mt-2 fw-bold">Chickenpox Screening</h4>
+        <p class="text-muted small">Use image upload OR answer symptom questions</p>
+      </div>
+
+      <!-- Toggle Tabs -->
+      <ul class="nav nav-pills mb-4 justify-content-center" id="modeTabs">
+        <li class="nav-item">
+          <button class="nav-link active" id="symptom-tab" onclick="showTab('symptom')">
+            <i class="fas fa-clipboard-list me-1"></i>Symptom Based
+          </button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-link" id="image-tab" onclick="showTab('image')">
+            <i class="fas fa-camera me-1"></i>Image Based
+          </button>
+        </li>
+      </ul>
+
+      <!-- Symptom Form -->
+      <div id="symptom-section">
+        <form method="POST">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Age</label>
+            <input type="number" name="age" class="form-control" placeholder="Enter your age">
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Itchy Red Spots or Blisters?</label>
+            <select name="itchy_spots" class="form-select">
+              <option value="0">No</option>
+              <option value="1">Yes</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Fever?</label>
+            <select name="fever" class="form-select">
+              <option value="0">No</option>
+              <option value="1">Yes</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Headache?</label>
+            <select name="headache" class="form-select">
+              <option value="0">No</option>
+              <option value="1">Yes</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Fatigue?</label>
+            <select name="fatigue" class="form-select">
+              <option value="0">No</option>
+              <option value="1">Yes</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Loss of Appetite?</label>
+            <select name="loss_of_appetite" class="form-select">
+              <option value="0">No</option>
+              <option value="1">Yes</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-semibold">
+              <i class="fas fa-map-marker-alt me-1" style="color:#e74c3c;"></i>Your State (India)
+            </label>
+            <select name="location" class="form-select">
+              <option value="">-- Select Your State --</option>
+              <option>Andhra Pradesh</option><option>Assam</option>
+              <option>Bihar</option><option>Chhattisgarh</option>
+              <option>Delhi</option><option>Goa</option>
+              <option>Gujarat</option><option>Haryana</option>
+              <option>Himachal Pradesh</option><option>Jharkhand</option>
+              <option>Karnataka</option><option>Kerala</option>
+              <option>Madhya Pradesh</option><option>Maharashtra</option>
+              <option>Odisha</option><option>Punjab</option>
+              <option>Rajasthan</option><option>Tamil Nadu</option>
+              <option>Telangana</option><option>Uttar Pradesh</option>
+              <option>Uttarakhand</option><option>West Bengal</option>
+              <option>Jammu & Kashmir</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary w-100">
+            <i class="fas fa-search me-2"></i>Predict via Symptoms
+          </button>
+        </form>
+      </div>
+
+      <!-- Image Upload Form -->
+      <div id="image-section" style="display:none;">
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Upload Image of Affected Area</label>
+            <input type="file" name="chickenpox_image" class="form-control"
+                   accept="image/*" id="chkpx-image-input">
+            <div class="form-text">Upload a clear close-up photo of skin rash/blisters. JPG or PNG only.</div>
+          </div>
+          <div id="chkpx-preview" class="text-center mb-3 d-none">
+            <img id="chkpx-preview-img" src="#" class="img-thumbnail" style="max-height:220px;">
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-semibold">
+              <i class="fas fa-map-marker-alt me-1" style="color:#e74c3c;"></i>Your State (India)
+            </label>
+            <select name="location" class="form-select">
+              <option value="">-- Select Your State --</option>
+              <option>Andhra Pradesh</option><option>Assam</option>
+              <option>Bihar</option><option>Chhattisgarh</option>
+              <option>Delhi</option><option>Goa</option>
+              <option>Gujarat</option><option>Haryana</option>
+              <option>Himachal Pradesh</option><option>Jharkhand</option>
+              <option>Karnataka</option><option>Kerala</option>
+              <option>Madhya Pradesh</option><option>Maharashtra</option>
+              <option>Odisha</option><option>Punjab</option>
+              <option>Rajasthan</option><option>Tamil Nadu</option>
+              <option>Telangana</option><option>Uttar Pradesh</option>
+              <option>Uttarakhand</option><option>West Bengal</option>
+              <option>Jammu & Kashmir</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-success w-100">
+            <i class="fas fa-brain me-2"></i>Analyze Image with AI
+          </button>
+        </form>
+      </div>
+
+      <a href="{% url 'disease_home' %}" class="btn btn-outline-secondary w-100 mt-3">
+        <i class="fas fa-arrow-left me-1"></i>Back
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function showTab(tab) {
+  document.getElementById('symptom-section').style.display = tab === 'symptom' ? 'block' : 'none';
+  document.getElementById('image-section').style.display   = tab === 'image'   ? 'block' : 'none';
+  document.getElementById('symptom-tab').classList.toggle('active', tab === 'symptom');
+  document.getElementById('image-tab').classList.toggle('active',   tab === 'image');
+}
+document.getElementById('chkpx-image-input').addEventListener('change', function(e) {
+  const file = e.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = ev => {
+      document.getElementById('chkpx-preview-img').src = ev.target.result;
+      document.getElementById('chkpx-preview').classList.remove('d-none');
+    };
+    reader.readAsDataURL(file);
+  }
+});
+</script>
+{% endblock %}

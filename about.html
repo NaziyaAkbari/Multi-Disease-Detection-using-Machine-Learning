@@ -1,0 +1,246 @@
+{% extends 'base.html' %}
+{% block title %}About Us{% endblock %}
+{% block content %}
+
+<div class="row justify-content-center mt-4 px-3">
+  <div class="col-md-10">
+
+    <!-- Hero -->
+    <div class="card p-5 mb-4 text-center"
+         style="background:linear-gradient(135deg,#1a1a2e,#16213e);color:white;border-radius:16px;">
+      <i class="fas fa-heartbeat fa-4x mb-3" style="color:#e74c3c;"></i>
+      <h2 class="fw-bold">About Multi Disease Detection </h2>
+      <p class="lead mb-0" style="color:#adb5bd;">
+        Intelligent Disease Detection Powered by Machine Learning
+      </p>
+    </div>
+
+    <!-- Mission -->
+    <div class="card p-4 mb-4">
+      <div class="row align-items-center">
+        <div class="col-md-2 text-center mb-3 mb-md-0">
+          <i class="fas fa-bullseye fa-4x" style="color:#e74c3c;"></i>
+        </div>
+        <div class="col-md-10">
+          <h4 class="fw-bold">Our Mission</h4>
+          <p class="text-muted mb-0">
+            Multi Disease Detection AI was built with a single goal — to make early disease
+            detection accessible to everyone in India. By combining the power
+            of Machine Learning with a simple, easy-to-use interface, we help
+            people screen for common diseases from the comfort of their home.
+            We believe early awareness saves lives, and technology can bridge
+            the gap between patients and healthcare.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- What We Do -->
+    <div class="card p-4 mb-4">
+      <h4 class="fw-bold mb-4 text-center">What We Do</h4>
+      <div class="row">
+        <div class="col-md-4 mb-3">
+          <div class="text-center p-3 rounded h-100"
+               style="background:#fff5f5;border-top:4px solid #e74c3c;">
+            <i class="fas fa-lungs fa-2x mb-2" style="color:#e74c3c;"></i>
+            <h6 class="fw-bold">Tuberculosis</h6>
+            <p class="text-muted small mb-0">
+              Symptom-based screening using Random Forest ML model trained
+              on clinical datasets.
+            </p>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <div class="text-center p-3 rounded h-100"
+               style="background:#fff8e1;border-top:4px solid #f39c12;">
+            <i class="fas fa-hand-dots fa-2x mb-2" style="color:#e67e22;"></i>
+            <h6 class="fw-bold">Skin Disease</h6>
+            <p class="text-muted small mb-0">
+              Image-based detection using MobileNetV2 deep learning model
+              — detects Acne, Eczema, Melanoma, Psoriasis and more.
+            </p>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <div class="text-center p-3 rounded h-100"
+               style="background:#f5f0ff;border-top:4px solid #8e44ad;">
+            <i class="fas fa-virus fa-2x mb-2" style="color:#8e44ad;"></i>
+            <h6 class="fw-bold">Malaria</h6>
+            <p class="text-muted small mb-0">
+              Symptom analysis using predictive algorithms to identify
+              malaria risk quickly.
+            </p>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <div class="text-center p-3 rounded h-100"
+               style="background:#f0f8ff;border-top:4px solid #2980b9;">
+            <i class="fas fa-wind fa-2x mb-2" style="color:#2980b9;"></i>
+            <h6 class="fw-bold">Asthma</h6>
+            <p class="text-muted small mb-0">
+              Respiratory symptom evaluation to assess asthma likelihood
+              and provide actionable advice.
+            </p>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <div class="text-center p-3 rounded h-100"
+               style="background:#f0fff4;border-top:4px solid #27ae60;">
+            <i class="fas fa-disease fa-2x mb-2" style="color:#27ae60;"></i>
+            <h6 class="fw-bold">Chickenpox</h6>
+            <p class="text-muted small mb-0">
+              Both image-based and symptom-based detection using CNN and
+              ML models respectively.
+            </p>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <div class="text-center p-3 rounded h-100"
+               style="background:#f8f9fa;border-top:4px solid #7f8c8d;">
+            <i class="fas fa-hospital fa-2x mb-2" style="color:#7f8c8d;"></i>
+            <h6 class="fw-bold">Hospital Locator</h6>
+            <p class="text-muted small mb-0">
+              State-wise nearby hospital suggestions across all 28 Indian
+              states for every detected condition.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Technology Stack -->
+    <div class="card p-4 mb-4">
+      <h4 class="fw-bold mb-4 text-center">Technology Stack</h4>
+      <div class="row text-center">
+        <div class="col-6 col-md-3 mb-3">
+          <div class="p-3 rounded" style="background:#f8f9fa;">
+            <i class="fab fa-python fa-2x mb-2" style="color:#3572A5;"></i>
+            <p class="fw-bold mb-0 small">Python</p>
+            <p class="text-muted" style="font-size:0.75rem;">Core Language</p>
+          </div>
+        </div>
+        <div class="col-6 col-md-3 mb-3">
+          <div class="p-3 rounded" style="background:#f8f9fa;">
+            <i class="fas fa-globe fa-2x mb-2" style="color:#092E20;"></i>
+            <p class="fw-bold mb-0 small">Django</p>
+            <p class="text-muted" style="font-size:0.75rem;">Web Framework</p>
+          </div>
+        </div>
+        <div class="col-6 col-md-3 mb-3">
+          <div class="p-3 rounded" style="background:#f8f9fa;">
+            <i class="fas fa-brain fa-2x mb-2" style="color:#FF6F00;"></i>
+            <p class="fw-bold mb-0 small">TensorFlow</p>
+            <p class="text-muted" style="font-size:0.75rem;">Deep Learning</p>
+          </div>
+        </div>
+        <div class="col-6 col-md-3 mb-3">
+          <div class="p-3 rounded" style="background:#f8f9fa;">
+            <i class="fas fa-database fa-2x mb-2" style="color:#003B57;"></i>
+            <p class="fw-bold mb-0 small">SQLite</p>
+            <p class="text-muted" style="font-size:0.75rem;">Database</p>
+          </div>
+        </div>
+        <div class="col-6 col-md-3 mb-3">
+          <div class="p-3 rounded" style="background:#f8f9fa;">
+            <i class="fas fa-robot fa-2x mb-2" style="color:#F7931E;"></i>
+            <p class="fw-bold mb-0 small">Scikit-learn</p>
+            <p class="text-muted" style="font-size:0.75rem;">ML Library</p>
+          </div>
+        </div>
+        <div class="col-6 col-md-3 mb-3">
+          <div class="p-3 rounded" style="background:#f8f9fa;">
+            <i class="fas fa-mobile-alt fa-2x mb-2" style="color:#7952B3;"></i>
+            <p class="fw-bold mb-0 small">Bootstrap 5</p>
+            <p class="text-muted" style="font-size:0.75rem;">Frontend</p>
+          </div>
+        </div>
+        <div class="col-6 col-md-3 mb-3">
+          <div class="p-3 rounded" style="background:#f8f9fa;">
+            <i class="fas fa-chart-bar fa-2x mb-2" style="color:#11557C;"></i>
+            <p class="fw-bold mb-0 small">Matplotlib</p>
+            <p class="text-muted" style="font-size:0.75rem;">Visualization</p>
+          </div>
+        </div>
+        <div class="col-6 col-md-3 mb-3">
+          <div class="p-3 rounded" style="background:#f8f9fa;">
+            <i class="fas fa-image fa-2x mb-2" style="color:#e67e22;"></i>
+            <p class="fw-bold mb-0 small">MobileNetV2</p>
+            <p class="text-muted" style="font-size:0.75rem;">CNN Model</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Team / Project Info -->
+    <div class="card p-4 mb-4">
+      <h4 class="fw-bold mb-4 text-center">Project Information</h4>
+      <div class="row text-center">
+        <div class="col-md-4 mb-3">
+          <div class="p-3 rounded" style="background:#f0fff4;">
+            <i class="fas fa-university fa-2x mb-2" style="color:#27ae60;"></i>
+            <h6 class="fw-bold">Academic Project</h6>
+            <p class="text-muted small mb-0">
+              Developed as a final year engineering project focusing on
+              AI in Healthcare.
+            </p>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <div class="p-3 rounded" style="background:#f0f8ff;">
+            <i class="fas fa-map-marker-alt fa-2x mb-2" style="color:#2980b9;"></i>
+            <h6 class="fw-bold">India Focused</h6>
+            <p class="text-muted small mb-0">
+              Hospital data, state selection and disease prevalence data
+              are all India-specific.
+            </p>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <div class="p-3 rounded" style="background:#fff5f5;">
+            <i class="fas fa-shield-alt fa-2x mb-2" style="color:#e74c3c;"></i>
+            <h6 class="fw-bold">Privacy First</h6>
+            <p class="text-muted small mb-0">
+              All user data is stored securely and never shared with
+              third parties.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Disclaimer -->
+    <div class="alert alert-warning mb-4">
+      <h6 class="fw-bold">
+        <i class="fas fa-exclamation-triangle me-2"></i>Medical Disclaimer
+      </h6>
+      <p class="mb-0 small">
+       Multi Disease Detection AI is a screening and awareness tool only. It is NOT a
+        substitute for professional medical advice, diagnosis, or treatment.
+        Always seek the advice of a qualified healthcare provider for any
+        medical condition. Never disregard professional medical advice or
+        delay seeking it because of something you have read or seen on this
+        platform.
+      </p>
+    </div>
+
+    <div class="text-center mb-4">
+      {% if user.is_authenticated %}
+        <a href="{% url 'disease_home' %}" class="btn btn-primary me-2">
+          <i class="fas fa-home me-1"></i>Go to Home
+        </a>
+      {% else %}
+        <a href="{% url 'register' %}" class="btn btn-primary me-2">
+          <i class="fas fa-user-plus me-1"></i>Get Started
+        </a>
+        <a href="{% url 'login' %}" class="btn btn-outline-primary">
+          <i class="fas fa-sign-in-alt me-1"></i>Login
+        </a>
+      {% endif %}
+      <a href="{% url 'contact' %}" class="btn btn-outline-secondary ms-2">
+        <i class="fas fa-envelope me-1"></i>Contact Us
+      </a>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

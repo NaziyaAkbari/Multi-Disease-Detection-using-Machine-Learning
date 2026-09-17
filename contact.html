@@ -1,0 +1,214 @@
+{% extends 'base.html' %}
+{% block title %}Contact Us{% endblock %}
+{% block content %}
+
+<div class="row justify-content-center mt-4 px-3">
+  <div class="col-md-10">
+
+    <!-- Hero -->
+    <div class="card p-4 mb-4 text-center"
+         style="background:linear-gradient(135deg,#1a1a2e,#16213e);
+                color:white;border-radius:16px;">
+      <i class="fas fa-envelope-open-text fa-4x mb-3" style="color:#3498db;"></i>
+      <h2 class="fw-bold">Contact Us</h2>
+      <p style="color:#adb5bd;" class="mb-0">
+        We would love to hear from you. Reach out for any queries or feedback.
+      </p>
+    </div>
+
+    <div class="row">
+
+      <!-- Contact Form -->
+      <div class="col-md-7 mb-4">
+        <div class="card p-4 h-100">
+          <h5 class="fw-bold mb-4">
+            <i class="fas fa-paper-plane me-2" style="color:#2980b9;"></i>
+            Send Us a Message
+          </h5>
+
+          {% if message_sent %}
+          <div class="alert alert-success">
+            <i class="fas fa-check-circle me-2"></i>
+            Thank you! Your message has been received. We will get back to you soon.
+          </div>
+          {% endif %}
+
+          <form method="POST" action="{% url 'contact' %}">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Full Name</label>
+              <input type="text" name="name" class="form-control"
+                     placeholder="Enter your full name" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Email Address</label>
+              <input type="email" name="email" class="form-control"
+                     placeholder="Enter your email" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Subject</label>
+              <select name="subject" class="form-select" required>
+                <option value="">-- Select Subject --</option>
+                <option>General Inquiry</option>
+                <option>Technical Support</option>
+                <option>Report a Bug</option>
+                <option>Feedback / Suggestion</option>
+                <option>Medical Query</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Message</label>
+              <textarea name="message" class="form-control" rows="5"
+                        placeholder="Type your message here..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">
+              <i class="fas fa-paper-plane me-2"></i>Send Message
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Contact Info -->
+      <div class="col-md-5 mb-4">
+        <div class="card p-4 mb-3">
+          <h5 class="fw-bold mb-4">
+            <i class="fas fa-info-circle me-2" style="color:#e74c3c;"></i>
+            Contact Information
+          </h5>
+
+          <div class="d-flex align-items-start mb-3 p-3 rounded"
+               style="background:#f8f9fa;">
+            <i class="fas fa-envelope fa-lg me-3 mt-1" style="color:#2980b9;"></i>
+            <div>
+              <p class="fw-bold mb-0 small">Email</p>
+              <p class="text-muted mb-0 small">naziyaakbari7@gmail.com</p>
+            </div>
+          </div>
+
+          <div class="d-flex align-items-start mb-3 p-3 rounded"
+               style="background:#f8f9fa;">
+            <i class="fas fa-phone fa-lg me-3 mt-1" style="color:#27ae60;"></i>
+            <div>
+              <p class="fw-bold mb-0 small">Phone</p>
+              <p class="text-muted mb-0 small">+91 7019050568</p>
+            </div>
+          </div>
+
+          <div class="d-flex align-items-start mb-3 p-3 rounded"
+               style="background:#f8f9fa;">
+            <i class="fas fa-map-marker-alt fa-lg me-3 mt-1"
+               style="color:#e74c3c;"></i>
+            <div>
+              <p class="fw-bold mb-0 small">Address</p>
+              <p class="text-muted mb-0 small">
+             
+               NR Colony M.S.K Mill 
+                Department of Computer Applications<br>
+                Kalaburagi, Karnataka — 585001, India
+              </p>
+            </div>
+          </div>
+
+          <div class="d-flex align-items-start p-3 rounded"
+               style="background:#f8f9fa;">
+            <i class="fas fa-clock fa-lg me-3 mt-1" style="color:#f39c12;"></i>
+            <div>
+              <p class="fw-bold mb-0 small">Support Hours</p>
+              <p class="text-muted mb-0 small">
+                24/7 Support — We are here to help you anytime, anywhere. Feel free to reach out with any questions or concerns.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ -->
+        <div class="card p-4">
+          <h6 class="fw-bold mb-3">
+            <i class="fas fa-question-circle me-2" style="color:#8e44ad;"></i>
+            Quick FAQs
+          </h6>
+          <div class="accordion accordion-flush" id="faqAccordion">
+
+            <div class="accordion-item border-0 mb-2 rounded"
+                 style="background:#f8f9fa;">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed rounded fw-semibold small"
+                        style="background:#f8f9fa;"
+                        type="button" data-bs-toggle="collapse"
+                        data-bs-target="#faq1">
+                  Is this a medical diagnosis tool?
+                </button>
+              </h2>
+              <div id="faq1" class="accordion-collapse collapse"
+                   data-bs-parent="#faqAccordion">
+                <div class="accordion-body small text-muted pt-0">
+                  No. Multi-Disease Detection is a screening and awareness tool only.
+                  Always consult a qualified doctor for diagnosis.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item border-0 mb-2 rounded"
+                 style="background:#f8f9fa;">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed rounded fw-semibold small"
+                        style="background:#f8f9fa;"
+                        type="button" data-bs-toggle="collapse"
+                        data-bs-target="#faq2">
+                  Is my data safe?
+                </button>
+              </h2>
+              <div id="faq2" class="accordion-collapse collapse"
+                   data-bs-parent="#faqAccordion">
+                <div class="accordion-body small text-muted pt-0">
+                  Yes. All prediction data is stored securely and is only
+                  visible to you and system administrators.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item border-0 rounded"
+                 style="background:#f8f9fa;">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed rounded fw-semibold small"
+                        style="background:#f8f9fa;"
+                        type="button" data-bs-toggle="collapse"
+                        data-bs-target="#faq3">
+                  How accurate are the predictions?
+                </button>
+              </h2>
+              <div id="faq3" class="accordion-collapse collapse"
+                   data-bs-parent="#faqAccordion">
+                <div class="accordion-body small text-muted pt-0">
+                  Our models are trained on medical datasets with 80–95%
+                  accuracy depending on the disease module. Results should
+                  be used for awareness only.
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="text-center mb-4">
+      {% if user.is_authenticated %}
+        <a href="{% url 'disease_home' %}" class="btn btn-primary me-2">
+          <i class="fas fa-home me-1"></i>Back to Home
+        </a>
+      {% else %}
+        <a href="{% url 'login' %}" class="btn btn-primary me-2">
+          <i class="fas fa-sign-in-alt me-1"></i>Login
+        </a>
+        <a href="{% url 'register' %}" class="btn btn-outline-primary">
+          <i class="fas fa-user-plus me-1"></i>Register
+        </a>
+      {% endif %}
+    </div>
+
+  </div>
+</div>
+{% endblock %}

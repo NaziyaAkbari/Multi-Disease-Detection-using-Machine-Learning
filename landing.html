@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MedDetect AI — Welcome</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      background:#0a0a1a;
+      color:white;
+      font-family:'Segoe UI',Arial,sans-serif;
+      overflow-x:hidden;
+    }
+
+    /* ── Particles background ── */
+    #particles {
+      position:fixed;
+      top:0; left:0;
+      width:100%; height:100%;
+      z-index:0;
+      pointer-events:none;
+    }
+
+    .particle {
+      position:absolute;
+      border-radius:50%;
+      background:rgba(231,76,60,0.3);
+      animation:float linear infinite;
+    }
+
+    @keyframes float {
+      0%   { transform:translateY(100vh) scale(0); opacity:0; }
+      10%  { opacity:1; }
+      90%  { opacity:0.5; }
+      100% { transform:translateY(-10vh) scale(1); opacity:0; }
+    }
+
+    /* ── Main container ── */
+    #landing {
+      position:relative;
+      z-index:1;
+      min-height:100vh;
+    }
+
+    /* ── Hero section ── */
+    #hero {
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:40px 20px;
+    }
+
+    .logo-pulse {
+      width:100px; height:100px;
+      background:rgba(231,76,60,0.15);
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      margin:0 auto 24px;
+      animation:pulse 2s ease-in-out infinite;
+      border:2px solid rgba(231,76,60,0.4);
+    }
+
+    @keyframes pulse {
+      0%,100% { box-shadow:0 0 0 0 rgba(231,76,60,0.4); }
+      50%      { box-shadow:0 0 0 20px rgba(231,76,60,0); }
+    }
+
+    .hero-title {
+      font-size:3.2rem;
+      font-weight:800;
+      background:linear-gradient(135deg,#e74c3c,#3498db,#27ae60);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+      margin-bottom:16px;
+      animation:slideDown 0.8s ease;
+    }
+
+    @keyframes slideDown {
+      from { opacity:0; transform:translateY(-30px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    .hero-sub {
+      font-size:1.1rem;
+      color:#adb5bd;
+      max-width:600px;
+      line-height:1.8;
+      animation:fadeIn 1s ease 0.3s both;
+    }
+
+    @keyframes fadeIn {
+      from { opacity:0; }
+      to   { opacity:1; }
+    }
+
+    .scroll-hint {
+      margin-top:40px;
+      animation:bounce 2s infinite;
+      color:#adb5bd;
+      font-size:0.9rem;
+    }
+
+    @keyframes bounce {
+      0%,100% { transform:translateY(0); }
+      50%      { transform:translateY(8px); }
+    }
+
+    /* ── Steps section ── */
+    #steps-section {
+      padding:60px 20px;
+      background:rgba(255,255,255,0.02);
+    }
+
+    .section-title {
+      text-align:center;
+      font-size:2rem;
+      font-weight:700;
+      margin-bottom:50px;
+      color:white;
+    }
+
+    .section-title span {
+      color:#e74c3c;
+    }
+
+    /* ── Step cards ── */
+    .step-card {
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.1);
+      border-radius:16px;
+      padding:28px 24px;
+      margin-bottom:20px;
+      opacity:0;
+      transform:translateX(-40px);
+      transition:all 0.6s ease;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .step-card.visible {
+      opacity:1;
+      transform:translateX(0);
+    }
+
+    .step-card:hover {
+      background:rgba(255,255,255,0.08);
+      border-color:rgba(255,255,255,0.2);
+      transform:translateY(-4px);
+      box-shadow:0 12px 40px rgba(0,0,0,0.3);
+    }
+
+    .step-card::before {
+      content:'';
+      position:absolute;
+      top:0; left:0;
+      width:4px;
+      height:100%;
+      border-radius:4px 0 0 4px;
+    }
+
+    .step-number {
+      width:44px; height:44px;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:800;
+      font-size:1.1rem;
+      flex-shrink:0;
+      margin-right:16px;
+    }
+
+    .step-title {
+      font-size:1.1rem;
+      font-weight:700;
+      margin-bottom:6px;
+    }
+
+    .step-desc {
+      color:#adb5bd;
+      font-size:0.9rem;
+      line-height:1.7;
+      margin:0;
+    }
+
+    /* Color themes per step */
+    .s1::before { background:#e74c3c; }
+    .s1 .step-number { background:rgba(231,76,60,0.2); color:#e74c3c; }
+
+    .s2::before { background:#3498db; }
+    .s2 .step-number { background:rgba(52,152,219,0.2); color:#3498db; }
+
+    .s3::before { background:#27ae60; }
+    .s3 .step-number { background:rgba(39,174,96,0.2); color:#27ae60; }
+
+    .s4::before { background:#f39c12; }
+    .s4 .step-number { background:rgba(243,156,18,0.2); color:#f39c12; }
+
+    .s5::before { background:#8e44ad; }
+    .s5 .step-number { background:rgba(142,68,173,0.2); color:#8e44ad; }
+
+    .s6::before { background:#e67e22; }
+    .s6 .step-number { background:rgba(230,126,34,0.2); color:#e67e22; }
+
+    .s7::before { background:#1abc9c; }
+    .s7 .step-number { background:rgba(26,188,156,0.2); color:#1abc9c; }
+
+    .s8::before { background:#e74c3c; }
+    .s8 .step-number { background:rgba(231,76,60,0.2); color:#e74c3c; }
+
+    /* ── Diseases section ── */
+    #diseases-section {
+      padding:60px 20px;
+    }
+
+    .disease-chip {
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.1);
+      border-radius:50px;
+      padding:12px 24px;
+      margin:8px;
+      font-size:0.95rem;
+      transition:all 0.3s ease;
+      cursor:default;
+    }
+
+    .disease-chip:hover {
+      background:rgba(255,255,255,0.1);
+      transform:scale(1.05);
+    }
+
+    /* ── Stats section ── */
+    #stats-section {
+      padding:50px 20px;
+      background:rgba(255,255,255,0.02);
+    }
+
+    .stat-box {
+      text-align:center;
+      padding:24px;
+    }
+
+    .stat-number {
+      font-size:2.8rem;
+      font-weight:800;
+      line-height:1;
+      margin-bottom:8px;
+    }
+
+    .stat-label {
+      color:#adb5bd;
+      font-size:0.9rem;
+    }
+
+    /* ── CTA section ── */
+    #cta-section {
+      padding:80px 20px;
+      text-align:center;
+    }
+
+    .cta-title {
+      font-size:2.4rem;
+      font-weight:800;
+      margin-bottom:16px;
+    }
+
+    .btn-glow {
+      background:linear-gradient(135deg,#e74c3c,#c0392b);
+      color:white;
+      border:none;
+      padding:14px 36px;
+      border-radius:50px;
+      font-size:1.05rem;
+      font-weight:600;
+      text-decoration:none;
+      display:inline-block;
+      transition:all 0.3s ease;
+      box-shadow:0 4px 20px rgba(231,76,60,0.4);
+      margin:8px;
+    }
+
+    .btn-glow:hover {
+      transform:translateY(-3px);
+      box-shadow:0 8px 30px rgba(231,76,60,0.6);
+      color:white;
+    }
+
+    .btn-ghost {
+      background:transparent;
+      color:white;
+      border:2px solid rgba(255,255,255,0.3);
+      padding:14px 36px;
+      border-radius:50px;
+      font-size:1.05rem;
+      font-weight:600;
+      text-decoration:none;
+      display:inline-block;
+      transition:all 0.3s ease;
+      margin:8px;
+    }
+
+    .btn-ghost:hover {
+      border-color:white;
+      background:rgba(255,255,255,0.1);
+      color:white;
+      transform:translateY(-3px);
+    }
+
+    /* ── Typing effect ── */
+    .typing {
+      border-right:3px solid #e74c3c;
+      white-space:nowrap;
+      overflow:hidden;
+      display:inline-block;
+    }
+
+    /* ── Navbar ── */
+    .landing-nav {
+      position:fixed;
+      top:0; left:0; right:0;
+      z-index:100;
+      padding:16px 32px;
+      background:rgba(10,10,26,0.8);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid rgba(255,255,255,0.05);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+
+    .landing-nav .brand {
+      font-size:1.3rem;
+      font-weight:800;
+      color:white;
+      text-decoration:none;
+    }
+
+    .landing-nav .nav-links a {
+      color:#adb5bd;
+      text-decoration:none;
+      margin-left:24px;
+      font-size:0.9rem;
+      transition:color 0.2s;
+    }
+
+    .landing-nav .nav-links a:hover { color:white; }
+
+    @media (max-width:768px) {
+      .hero-title { font-size:2rem; }
+      .cta-title  { font-size:1.6rem; }
+      .landing-nav .nav-links { display:none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Particles -->
+<div id="particles"></div>
+
+<!-- Fixed Navbar -->
+<nav class="landing-nav">
+  <a href="#" class="brand">
+    <i class="fas fa-heartbeat me-2" style="color:#e74c3c;"></i>Multi Disease Detection
+  </a>
+  <div class="nav-links">
+    <a href="#steps-section">How It Works</a>
+    <a href="#diseases-section">Diseases</a>
+    <a href="{% url 'about' %}">About</a>
+    <a href="{% url 'contact' %}">Contact</a>
+    <a href="{% url 'login' %}"
+       style="color:white;background:rgba(231,76,60,0.8);
+              padding:6px 18px;border-radius:20px;">
+      Login
+    </a>
+  </div>
+</nav>
+
+<!-- ── HERO ───────────────────────────────────────────────── -->
+<section id="hero">
+  <div class="logo-pulse">
+    <i class="fas fa-heartbeat fa-3x" style="color:#e74c3c;"></i>
+  </div>
+
+  <h1 class="hero-title">Multi Disease Detection</h1>
+
+  <p class="hero-sub">
+    <span id="typing-text" class="typing"></span>
+  </p>
+
+  <div class="mt-4 d-flex flex-wrap justify-content-center gap-3">
+    <span style="background:rgba(231,76,60,0.15);border:1px solid rgba(231,76,60,0.3);
+                 color:#e74c3c;padding:6px 16px;border-radius:20px;font-size:0.85rem;">
+      <i class="fas fa-brain me-1"></i>Machine Learning
+    </span>
+    <span style="background:rgba(52,152,219,0.15);border:1px solid rgba(52,152,219,0.3);
+                 color:#3498db;padding:6px 16px;border-radius:20px;font-size:0.85rem;">
+      <i class="fas fa-shield-alt me-1"></i>5 Diseases Covered
+    </span>
+    <span style="background:rgba(39,174,96,0.15);border:1px solid rgba(39,174,96,0.3);
+                 color:#27ae60;padding:6px 16px;border-radius:20px;font-size:0.85rem;">
+      <i class="fas fa-map-marker-alt me-1"></i>India Focused
+    </span>
+  </div>
+
+  <div class="scroll-hint mt-5">
+    <i class="fas fa-chevron-down d-block mb-1"></i>
+    Scroll to learn how it works
+  </div>
+</section>
+
+<!-- ── HOW IT WORKS ───────────────────────────────────────── -->
+<section id="steps-section">
+  <div class="container">
+    <h2 class="section-title">
+      How It <span>Works</span>
+    </h2>
+
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+
+        <div class="step-card s1">
+          <div class="d-flex align-items-start">
+            <div class="step-number">1</div>
+            <div>
+              <p class="step-title">
+                <i class="fas fa-user-plus me-2" style="color:#e74c3c;"></i>
+                Register Your Account
+              </p>
+              <p class="step-desc">
+                Create your free Multi Disease Detection account by filling in your
+                personal details — name, age, gender, state, and a profile
+                picture. Takes less than 2 minutes. Your data is stored
+                securely and never shared.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-card s2">
+          <div class="d-flex align-items-start">
+            <div class="step-number">2</div>
+            <div>
+              <p class="step-title">
+                <i class="fas fa-sign-in-alt me-2" style="color:#3498db;"></i>
+                Login to Your Account
+              </p>
+              <p class="step-desc">
+                After registration, log in with your username and password.
+                You will be redirected to your personal home dashboard where
+                all 5 disease modules are available for screening.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-card s3">
+          <div class="d-flex align-items-start">
+            <div class="step-number">3</div>
+            <div>
+              <p class="step-title">
+                <i class="fas fa-home me-2" style="color:#27ae60;"></i>
+                Home Page — Choose a Disease
+              </p>
+              <p class="step-desc">
+                From the home dashboard, choose any of the 5 disease modules
+                — Tuberculosis, Skin Disease, Malaria, Asthma, or Chickenpox.
+                Each module has its own dedicated screening form.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-card s4">
+          <div class="d-flex align-items-start">
+            <div class="step-number">4</div>
+            <div>
+              <p class="step-title">
+                <i class="fas fa-clipboard-list me-2" style="color:#f39c12;"></i>
+                Enter Symptoms or Upload Image
+              </p>
+              <p class="step-desc">
+                For symptom-based diseases (TB, Malaria, Asthma), answer
+                simple Yes/No questions about your symptoms. For image-based
+                diseases (Skin Disease, Chickenpox), upload a clear photo
+                of the affected area. Also select your Indian state for
+                hospital suggestions.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-card s5">
+          <div class="d-flex align-items-start">
+            <div class="step-number">5</div>
+            <div>
+              <p class="step-title">
+                <i class="fas fa-brain me-2" style="color:#8e44ad;"></i>
+                AI Model Processes Your Data
+              </p>
+              <p class="step-desc">
+                Our trained Machine Learning models analyze your inputs.
+                Symptom-based diseases use Random Forest classifiers.
+                Image-based diseases use MobileNetV2 deep learning CNN
+                models trained on medical image datasets from Kaggle.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-card s6">
+          <div class="d-flex align-items-start">
+            <div class="step-number">6</div>
+            <div>
+              <p class="step-title">
+                <i class="fas fa-file-medical me-2" style="color:#e67e22;"></i>
+                View Your Result
+              </p>
+              <p class="step-desc">
+                Your result page shows the prediction (Positive/Negative
+                or detected condition name), confidence score, suggested
+                medicines with dosage info, health tips, and nearby
+                hospitals in your state that specialize in that disease.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-card s7">
+          <div class="d-flex align-items-start">
+            <div class="step-number">7</div>
+            <div>
+              <p class="step-title">
+                <i class="fas fa-history me-2" style="color:#1abc9c;"></i>
+                View Prediction History
+              </p>
+              <p class="step-desc">
+                All your past predictions are saved in your history page.
+                You can track all screenings with disease name, prediction
+                result, confidence score, date, and uploaded images —
+                all in one place.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-card s8">
+          <div class="d-flex align-items-start">
+            <div class="step-number">8</div>
+            <div>
+              <p class="step-title">
+                <i class="fas fa-envelope me-2" style="color:#e74c3c;"></i>
+                Contact Us Anytime
+              </p>
+              <p class="step-desc">
+                Have questions or feedback? Use the Contact Us page to
+                send a message. Our team at Kalaburagi, Karnataka will
+                respond within 1-2 business days at
+                naziyaakbari7@gmail.com or call +91 7019050568.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── DISEASES ────────────────────────────────────────────── -->
+<section id="diseases-section">
+  <div class="container text-center">
+    <h2 class="section-title">Diseases We <span>Detect</span></h2>
+    <div class="d-flex flex-wrap justify-content-center">
+      <div class="disease-chip">
+        <i class="fas fa-lungs" style="color:#e74c3c;"></i>
+        Tuberculosis
+      </div>
+      <div class="disease-chip">
+        <i class="fas fa-hand-dots" style="color:#e67e22;"></i>
+        Skin Disease
+      </div>
+      <div class="disease-chip">
+        <i class="fas fa-virus" style="color:#8e44ad;"></i>
+        Malaria
+      </div>
+      <div class="disease-chip">
+        <i class="fas fa-wind" style="color:#2980b9;"></i>
+        Asthma
+      </div>
+      <div class="disease-chip">
+        <i class="fas fa-disease" style="color:#27ae60;"></i>
+        Chickenpox
+      </div>
+    </div>
+
+    <div class="row mt-5">
+      <div class="col-6 col-md-3 mb-3">
+        <div class="disease-chip w-100 justify-content-center">
+          <i class="fas fa-image" style="color:#3498db;"></i>
+          Image Detection
+        </div>
+      </div>
+      <div class="col-6 col-md-3 mb-3">
+        <div class="disease-chip w-100 justify-content-center">
+          <i class="fas fa-clipboard-list" style="color:#27ae60;"></i>
+          Symptom Analysis
+        </div>
+      </div>
+      <div class="col-6 col-md-3 mb-3">
+        <div class="disease-chip w-100 justify-content-center">
+          <i class="fas fa-pills" style="color:#8e44ad;"></i>
+          Medicine Suggestions
+        </div>
+      </div>
+      <div class="col-6 col-md-3 mb-3">
+        <div class="disease-chip w-100 justify-content-center">
+          <i class="fas fa-hospital" style="color:#e74c3c;"></i>
+          Hospital Locator
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── STATS ──────────────────────────────────────────────── -->
+<section id="stats-section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-6 col-md-3">
+        <div class="stat-box">
+          <div class="stat-number" style="color:#e74c3c;">5</div>
+          <div class="stat-label">Diseases Covered</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-box">
+          <div class="stat-number" style="color:#3498db;">30+</div>
+          <div class="stat-label">Indian States</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-box">
+          <div class="stat-number" style="color:#27ae60;">95%</div>
+          <div class="stat-label">Model Accuracy</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-box">
+          <div class="stat-number" style="color:#f39c12;">Free</div>
+          <div class="stat-label">Always Free to Use</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ────────────────────────────────────────────────── -->
+<section id="cta-section">
+  <div class="container">
+    <div class="cta-title">
+      Ready to check your health?
+    </div>
+    <p style="color:#adb5bd;margin-bottom:32px;font-size:1.05rem;">
+      Join Multi Disease Detection for free and get your disease screening done
+      in minutes — powered by AI.
+    </p>
+    <a href="{% url 'register' %}" class="btn-glow">
+      <i class="fas fa-user-plus me-2"></i>Get Started Free
+    </a>
+    <a href="{% url 'login' %}" class="btn-ghost">
+      <i class="fas fa-sign-in-alt me-2"></i>Login
+    </a>
+    <div class="mt-4">
+      <a href="{% url 'about' %}"
+         style="color:#adb5bd;text-decoration:none;margin:0 12px;font-size:0.9rem;">
+        About Us
+      </a>
+      <a href="{% url 'contact' %}"
+         style="color:#adb5bd;text-decoration:none;margin:0 12px;font-size:0.9rem;">
+        Contact Us
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+// ── Particles ────────────────────────────────────────────────────
+(function() {
+  const container = document.getElementById('particles');
+  for (let i = 0; i < 25; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = Math.random() * 6 + 3;
+    p.style.cssText = `
+      width:${size}px;
+      height:${size}px;
+      left:${Math.random() * 100}%;
+      animation-duration:${Math.random() * 15 + 10}s;
+      animation-delay:${Math.random() * 10}s;
+      background:rgba(${
+        Math.random() > 0.5 ? '231,76,60' : '52,152,219'
+      },0.25);
+    `;
+    container.appendChild(p);
+  }
+})();
+
+// ── Typing effect ────────────────────────────────────────────────
+(function() {
+  const texts = [
+    'AI-powered disease detection for everyone.',
+    'Early detection. Better outcomes.',
+    'Powered by Machine Learning & Deep Learning.',
+    'Covering 5 diseases. 30 Indian states.',
+    'Your health. Our priority.',
+  ];
+  let ti = 0, ci = 0, deleting = false;
+  const el = document.getElementById('typing-text');
+
+  function type() {
+    const current = texts[ti];
+    if (!deleting) {
+      el.textContent = current.slice(0, ++ci);
+      if (ci === current.length) {
+        deleting = true;
+        setTimeout(type, 2000);
+        return;
+      }
+    } else {
+      el.textContent = current.slice(0, --ci);
+      if (ci === 0) {
+        deleting = false;
+        ti = (ti + 1) % texts.length;
+      }
+    }
+    setTimeout(type, deleting ? 40 : 70);
+  }
+  type();
+})();
+
+// ── Scroll animations ────────────────────────────────────────────
+(function() {
+  const cards = document.querySelectorAll('.step-card');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, i * 100);
+      }
+    });
+  }, { threshold: 0.15 });
+  cards.forEach(c => observer.observe(c));
+})();
+
+// ── Counter animation ────────────────────────────────────────────
+(function() {
+  const nums = document.querySelectorAll('.stat-number');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const text = el.textContent.trim();
+        const num = parseInt(text);
+        if (!isNaN(num)) {
+          let current = 0;
+          const step = Math.ceil(num / 40);
+          const timer = setInterval(() => {
+            current = Math.min(current + step, num);
+            el.textContent = current + (text.includes('%') ? '%' : '');
+            if (current >= num) clearInterval(timer);
+          }, 30);
+        }
+        observer.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+  nums.forEach(n => observer.observe(n));
+})();
+</script>
+
+</body>
+</html>
